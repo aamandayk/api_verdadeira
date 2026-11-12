@@ -22,3 +22,4 @@ DELETE FROM aula WHERE id = 10;
 UPDATE aula SET professor = "Patrick"
 WHERE id = 2;
 SELECT componente, professor FROM aula WHERE id = 10;
+
