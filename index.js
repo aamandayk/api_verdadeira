@@ -8,8 +8,6 @@ const port = 3000
 // npm i mysql2
 const db = require("./db")
 
-// ================= ROTAS DE AULA =================
-
 // GET /aula
 app.get("/aula", async (req, res) => {
   try {
@@ -52,22 +50,18 @@ app.delete("/aula/:id", async (req, res) => {
   }
 })
 
-// ================= ROTAS DE HORÁRIO =================
-
 // POST /horario
 app.post("/horario", async (req, res) => {
   try {
     const dados = req.body
-    // ATENÇÃO: Verifique se a coluna da chave estrangeira no seu banco se chama "id_aula" ou "aula_id"
     const resultado = await db.pool.query(
-      "INSERT INTO horario (dia, hora, id_aula) VALUES (?, ?, ?)",
-      [dados.dia, dados.hora, dados.id_aula]
+      "INSERT INTO horario_aula (dia_semana, ordem , idaula) VALUES (?, ?, ?)",
+      [dados.dia_semana, dados.ordem, dados.idaula]
     )
     res.status(201).json({
       resultado: "Horário cadastrado, ID = " + resultado[0].insertId
     })
   } catch (erro) {
-    // Se tentar inserir um id_aula que não existe na tabela aula, o MySQL bloqueia e retorna o erro aqui
     res.status(500).json({ erro: erro.message })
   }
 })
@@ -102,7 +96,6 @@ app.delete("/horario/:id", async (req, res) => {
   }
 })
 
-// ================= INICIAR SERVIDOR =================
 
 app.listen(port, () => {
   console.log("API rodando na porta " + port)
