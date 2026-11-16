@@ -71,7 +71,7 @@ app.get("/horario/:dia", async (req, res) => {
   try {
     const dia = req.params.dia
     const resultado = await db.pool.query(
-      "SELECT * FROM horario WHERE dia = ?",
+      "SELECT * FROM horario_aula WHERE dia_semana = ?",
       [dia]
     )
     res.status(200).json(resultado[0])
@@ -84,7 +84,7 @@ app.get("/horario/:dia", async (req, res) => {
 app.delete("/horario/:id", async (req, res) => {
   try {
     const id = req.params.id
-    const [resultado] = await db.pool.query("DELETE FROM horario WHERE id = ?", [id])
+    const [resultado] = await db.pool.query("DELETE FROM horario_aula WHERE idaula = ?", [id])
 
     if (resultado.affectedRows === 0) {
       return res.status(404).json({ erro: "Horário não encontrado" })
@@ -100,3 +100,7 @@ app.delete("/horario/:id", async (req, res) => {
 app.listen(port, () => {
   console.log("API rodando na porta " + port)
 })
+
+
+
+//{"dia_semana": "segunda","ordem": 1,"idaula": 1}
